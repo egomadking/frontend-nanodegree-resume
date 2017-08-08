@@ -92,3 +92,24 @@ var education = {
     ]
 };
 
+for(job in work.jobs){
+    $("#workExperience").append(HTMLworkStart);
+    var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+    var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+    var employerTitle = formattedWorkEmployer + formattedWorkTitle;
+    $(".work-entry:last").append(employerTitle);
+}
+
+var formattedName = HTMLheaderName.replace("%data%", bio.name);
+var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
+$("#header").append(formattedName);
+$("#header").append(formattedRole);
+
+if (bio.skills.length > 0) {
+    $("#header").append(HTMLskillsStart);
+    for (var i= 0; i<bio.skills.length; i++){
+        var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
+    $("#skills").append(formattedSkill);
+    };
+}
+
