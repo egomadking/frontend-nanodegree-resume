@@ -53,7 +53,10 @@ var bio = {
         "githib": "egomadking",
         "twitter": "@royemosby",
         "location": "Savannah, GA"
-    }
+    },
+    "skills": [
+        "MS Office", "HTML", "CSS", "SharePoint", "Systems design", "Business workflow development"
+    ] 
 };
 
 var education = {
@@ -88,3 +91,4 @@ var education = {
         }
     ]
 };
+
