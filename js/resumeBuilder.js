@@ -7,7 +7,7 @@ var work = {
             "dates": "2011-2015",
             "description": [
                 "Provided operational support for Joint Multinational Simulation Center.",
-                "Unit representative for knowledge management efforts",
+                "Unit representative for knowledge management efforts.",
                 "Responsible for coordinating resources for training units and delegating tasks assigned by higher unit."
             ]
         },
@@ -92,19 +92,34 @@ var education = {
         }
     ]
 };
+var formattedPic = HTMLbioPic.replace("%data%", bio.bioPic);
+var formattedName = HTMLheaderName.replace("%data%", bio.name);
+var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
+$("#header").append(formattedPic);
+$("#header").append(formattedName);
+$("#header").append(formattedRole);
 
 for(job in work.jobs){
-    $("#workExperience").append(HTMLworkStart);
     var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
     var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
     var employerTitle = formattedWorkEmployer + formattedWorkTitle;
+    var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);  
+    
+    $("#workExperience").append(HTMLworkStart);
     $(".work-entry:last").append(employerTitle);
+    $(".work-entry:last").append(formattedWorkDates);
+    
+    var descr = "";
+    for(var i = 0; i < work.jobs[job].description.length; i++) {  
+        if(i === 0){
+            descr = work.jobs[job].description[i];
+        } else {
+            descr = descr + " " + work.jobs[job].description[i]            
+        };
+    };
+    var formattedWorkDescription = HTMLworkDescription.replace("%data%",descr);
+    $(".work-entry:last").append(formattedWorkDescription);
 }
-
-var formattedName = HTMLheaderName.replace("%data%", bio.name);
-var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
-$("#header").append(formattedName);
-$("#header").append(formattedRole);
 
 if (bio.skills.length > 0) {
     $("#header").append(HTMLskillsStart);
