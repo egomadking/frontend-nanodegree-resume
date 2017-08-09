@@ -6,9 +6,9 @@ var work = {
             "location": "Germany",
             "dates": "2011-2015",
             "description": [
-                "did this",
-                "did that",
-                "did some more"
+                "Provided operational support for Joint Multinational Simulation Center.",
+                "Unit representative for knowledge management efforts",
+                "Responsible for coordinating resources for training units and delegating tasks assigned by higher unit."
             ]
         },
         {
@@ -17,7 +17,7 @@ var work = {
             "location": "Georgia",
             "dates": "2015 - present",
             "description": [
-                "did this",
+                "Maintains SharePoint 2013 site collections on 2 networks for division staff and subordinate units, to include permissions, site layout, and content management.",
                 "did that",
                 "did some more"
             ]
@@ -56,7 +56,8 @@ var bio = {
     },
     "skills": [
         "MS Office", "HTML", "CSS", "SharePoint", "Systems design", "Business workflow development"
-    ] 
+    ],
+    "bioPic": "http://roymosby.me/images/Roy.jpg",
 };
 
 var education = {
