@@ -96,9 +96,11 @@ var education = {
 var formattedPic = HTMLbioPic.replace("%data%", bio.bioPic);
 var formattedName = HTMLheaderName.replace("%data%", bio.name);
 var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+var internationalize = false;
 $("#header").append(formattedPic);
 $("#header").append(formattedName);
 $("#header").append(formattedRole);
+
 
 if (bio.skills.length > 0) {
     $("#header").append(HTMLskillsStart);
@@ -139,4 +141,18 @@ $(document).click(function(loc) {
     logClicks(x, y);
 });
 
+$("#main").append(internationalizeButton);
+function inName() {
+    if(internationalize === false) {
+        //capitalize last;
+    } else {
+        //title case last;
+    }
+}
+
+/*
+$(internationalize button).click() {
+    inName();
+}
+*/
 
