@@ -145,8 +145,20 @@ $("#main").append(internationalizeButton);
 function inName() {
     if(internationalize === false) {
         //capitalize last;
+        var splitName = bio.name.split(" ");
+        splitName[1] = splitName[1].toUpperCase();
+        bio.name = splitName.join(" ");
+        $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
+        internationalize = true;
+        //return bio.name;
     } else {
         //title case last;
+        var splitName = bio.name.split(" ");
+        splitName[1] = splitName[1].slice(0,1).toUpperCase() + splitName[1].slice(1).toLowerCase();
+        bio.name = splitName.join(" ");
+        $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
+        internationalize = false;
+       //return bio.name;
     }
 }
 
@@ -155,4 +167,3 @@ $(internationalize button).click() {
     inName();
 }
 */
-
