@@ -61,6 +61,7 @@ var googleMap = '<div id="map"></div>';
 
 /*
 The Internationalize Names challenge found in the lesson Flow Control from JavaScript Basics requires you to create a function that will need this helper code to run. Don't delete! It hooks up your code to the button you'll be appending.
+*/
 $(document).ready(function() {
   $('button').click(function() {
     var $name = $('#name');
@@ -68,7 +69,7 @@ $(document).ready(function() {
     $name.html(iName);
   });
 });
-*/
+
 
 /*
 The next few lines about clicks are for the Collecting Click Locations quiz in the lesson Flow Control from JavaScript Basics.
@@ -85,9 +86,9 @@ function logClicks(x,y) {
   console.log('x location: ' + x + '; y location: ' + y);
 }
 
-$(document).click(function(loc) {
-  // your code goes here!
-});
+// $(document).click(function(loc) {
+//   // your code goes here!
+// });
 
 
 
@@ -239,7 +240,7 @@ Uncomment the code below when you're ready to implement a Google Map!
 */
 
 // Calls the initializeMap() function when the page loads
-//window.addEventListener('load', initializeMap);
+window.addEventListener('load', initializeMap);
 
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds
