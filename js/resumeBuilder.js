@@ -1,6 +1,5 @@
 var work = {
-    "jobs": [
-        {
+    "jobs": [{
             "employer": "JMSC",
             "title": "Operations NCO",
             "location": "Germany",
@@ -26,8 +25,7 @@ var work = {
 };
 
 var projects = {
-    "projects": [
-        {
+    "projects": [{
             "name": "portal migration",
             "dates": "Oct 16 - Jan 17",
             "description": "Army division level portal migration from SP10 to SP13",
@@ -39,7 +37,27 @@ var projects = {
             "description": "Static website for a fictitious ice cream company",
             "images": ["images/JHlogo.jpg", "images/JHsnapshot.jpg"]
         }
-    ]
+    ],
+    display: function() {
+        for (var i = 0; i < projects.projects.length; i++) {
+            var projectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].name);
+            var projectDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
+            var projectDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
+            
+            var projectImages = projects.projects[i].images.slice();
+            
+            for (j = 0; j < projectImages.length; j ++) {
+                projectImages[j] = HTMLprojectImage.replace("%data%", projectImages[j]);
+            }
+
+            $("#projects").append(HTMLprojectStart);
+            $(".project-entry:last").append(projectTitle);
+            $(".project-entry:last").append(projectDates);
+            $(".project-entry:last").append(projectDescription);
+            $(".project-entry:last").append(projectImages.join(""));
+            
+        }
+    }
 };
 
 var bio = {
@@ -61,8 +79,7 @@ var bio = {
 };
 
 var education = {
-    "schools": [
-        {
+    "schools": [{
             "name": "Southern New Hampshire University",
             "location": "Online",
             "dates": "2015-2017",
@@ -77,8 +94,7 @@ var education = {
             "majors": ["Studied graphic design"]
         }
     ],
-    "courses": [
-        {
+    "courses": [{
             "title": "AKMQC",
             "school": "Combined Arms Center",
             "dates": "Aug 2014",
@@ -135,15 +151,16 @@ function displayWork() {
 }
 displayWork();
 
-$(document).click(function(loc) {
+$(document).click(function (loc) {
     x = event.pageX;
     y = event.pageY;
     logClicks(x, y);
 });
 
 $("#main").append(internationalizeButton);
+
 function inName() {
-    if(internationalize === false) {
+    if (internationalize === false) {
         //capitalize last;
         var splitName = bio.name.split(" ");
         splitName[1] = splitName[1].toUpperCase();
@@ -154,16 +171,13 @@ function inName() {
     } else {
         //title case last;
         var splitName = bio.name.split(" ");
-        splitName[1] = splitName[1].slice(0,1).toUpperCase() + splitName[1].slice(1).toLowerCase();
+        splitName[1] = splitName[1].slice(0, 1).toUpperCase() + splitName[1].slice(1).toLowerCase();
         bio.name = splitName.join(" ");
         $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
         internationalize = false;
-       //return bio.name;
+        //return bio.name;
     }
 }
 
-/*
-$(internationalize button).click() {
-    inName();
-}
-*/
+projects.display();
+$("#mapDiv").append(googleMap);
