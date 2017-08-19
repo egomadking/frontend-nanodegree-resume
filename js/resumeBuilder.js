@@ -21,7 +21,30 @@ var work = {
                 "did some more"
             ]
         }
-    ]
+    ],
+    displayWork: function() {
+        for (job in work.jobs) {
+            var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+            var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+            var employerTitle = formattedWorkEmployer + formattedWorkTitle;
+            var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
+    
+            $("#workExperience").append(HTMLworkStart);
+            $(".work-entry:last").append(employerTitle);
+            $(".work-entry:last").append(formattedWorkDates);
+    
+            var descr = "";
+            for (var i = 0; i < work.jobs[job].description.length; i++) {
+                if (i === 0) {
+                    descr = work.jobs[job].description[i];
+                } else {
+                    descr = descr + " " + work.jobs[job].description[i]
+                };
+            };
+            var formattedWorkDescription = HTMLworkDescription.replace("%data%", descr);
+            $(".work-entry:last").append(formattedWorkDescription);
+        }
+    }
 };
 
 var projects = {
@@ -38,15 +61,15 @@ var projects = {
             "images": ["images/JHlogo.jpg", "images/JHsnapshot.jpg"]
         }
     ],
-    display: function() {
+    display: function () {
         for (var i = 0; i < projects.projects.length; i++) {
             var projectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].name);
             var projectDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
             var projectDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
-            
+
             var projectImages = projects.projects[i].images.slice();
-            
-            for (j = 0; j < projectImages.length; j ++) {
+
+            for (j = 0; j < projectImages.length; j++) {
                 projectImages[j] = HTMLprojectImage.replace("%data%", projectImages[j]);
             }
 
@@ -55,7 +78,7 @@ var projects = {
             $(".project-entry:last").append(projectDates);
             $(".project-entry:last").append(projectDescription);
             $(".project-entry:last").append(projectImages.join(""));
-            
+
         }
     }
 };
@@ -68,7 +91,7 @@ var bio = {
     "contacts": {
         "mobile": "phone numer",
         "email": "roy.e.mosby@gmail.com",
-        "githib": "egomadking",
+        "github": "egomadking",
         "twitter": "@royemosby",
         "location": "Savannah, GA"
     },
@@ -76,6 +99,23 @@ var bio = {
         "MS Office", "HTML", "CSS", "SharePoint", "Systems design", "Business workflow development"
     ],
     "bioPic": "http://roymosby.me/images/Roy.jpg",
+    displayBio: function() {
+        $("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
+        $("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
+        $("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
+        $("#topContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
+        $("#topContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
+        $("#topContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
+        $("#topContacts").append(HTMLtwitter.replace("%data%", bio.contacts.twitter));
+        $("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
+        if (bio.skills.length > 0) {
+            $("#header").append(HTMLskillsStart);
+            for (var i = 0; i < bio.skills.length; i++) {
+                var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
+                $("#skills").append(formattedSkill);
+            };
+        }
+    }
 };
 
 var education = {
@@ -109,56 +149,21 @@ var education = {
     ]
 };
 
-var formattedPic = HTMLbioPic.replace("%data%", bio.bioPic);
-var formattedName = HTMLheaderName.replace("%data%", bio.name);
-var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
-var internationalize = false;
-$("#header").append(formattedPic);
-$("#header").append(formattedName);
-$("#header").append(formattedRole);
+// display resume info from objects
+bio.displayBio();
+work.displayWork();
+projects.display();
 
-
-if (bio.skills.length > 0) {
-    $("#header").append(HTMLskillsStart);
-    for (var i = 0; i < bio.skills.length; i++) {
-        var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
-        $("#skills").append(formattedSkill);
-    };
-}
-
-function displayWork() {
-    for (job in work.jobs) {
-        var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
-        var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
-        var employerTitle = formattedWorkEmployer + formattedWorkTitle;
-        var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
-
-        $("#workExperience").append(HTMLworkStart);
-        $(".work-entry:last").append(employerTitle);
-        $(".work-entry:last").append(formattedWorkDates);
-
-        var descr = "";
-        for (var i = 0; i < work.jobs[job].description.length; i++) {
-            if (i === 0) {
-                descr = work.jobs[job].description[i];
-            } else {
-                descr = descr + " " + work.jobs[job].description[i]
-            };
-        };
-        var formattedWorkDescription = HTMLworkDescription.replace("%data%", descr);
-        $(".work-entry:last").append(formattedWorkDescription);
-    }
-}
-displayWork();
-
+//click logger
 $(document).click(function (loc) {
     x = event.pageX;
     y = event.pageY;
     logClicks(x, y);
 });
 
+//internationalize button
+var internationalize = false;
 $("#main").append(internationalizeButton);
-
 function inName() {
     if (internationalize === false) {
         //capitalize last;
@@ -179,5 +184,5 @@ function inName() {
     }
 }
 
-projects.display();
+//supposed to insert a Google Map
 $("#mapDiv").append(googleMap);
