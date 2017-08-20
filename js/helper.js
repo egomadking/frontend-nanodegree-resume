@@ -147,6 +147,7 @@ function initializeMap() {
     });
 
     return locations;
+    console.log(locations);
   }
 
   /*
@@ -240,7 +241,7 @@ Uncomment the code below when you're ready to implement a Google Map!
 */
 
 // Calls the initializeMap() function when the page loads
-//window.addEventListener('load', initializeMap);
+window.addEventListener('load', initializeMap);
 
 // Vanilla JS way to listen for resizing of the window
 // and adjust map bounds

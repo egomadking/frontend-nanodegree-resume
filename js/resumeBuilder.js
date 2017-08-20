@@ -121,14 +121,14 @@ var bio = {
 var education = {
     "schools": [{
             "name": "Southern New Hampshire University",
-            "location": "Online",
+            "location": "New Hampshire",
             "dates": "2015-2017",
             "url": "https://snhu.edu",
             "majors": ["Bachelors of science in IT"]
         },
         {
             "name": "Art Institute Online",
-            "location": "Online",
+            "location": "Pittsburgh",
             "dates": "2006-2008",
             "url": "https://aiu.edu",
             "majors": ["Studied graphic design"]
