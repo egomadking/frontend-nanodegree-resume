@@ -1,8 +1,162 @@
+var bio = {
+    "name": "Roy Mosby",
+    "role": "Content Manager",
+    "welcomeMessage": "Getting design out of the way of content",
+    "contacts": {
+        "mobile": "234-804-4350",
+        "email": "roy.e.mosby@gmail.com",
+        "github": "egomadking",
+        "twitter": "@royemosby",
+        "location": "Richmond Hill, GA"
+    },
+    "skills": [
+        "SharePoint", "Systems design", "Business workflow development", "MS Office", "HTML", "CSS", "JavaScript" 
+    ],
+    "bioPic": "http://roymosby.me/images/Roy.jpg",
+    display: function() {
+        $("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
+        $("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
+        $("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
+
+        //link all media
+        var mobile = '<a href="tel:' + bio.contacts.mobile + '">' + bio.contacts.mobile + '</a>';
+        var email = '<a href="mailto:' + bio.contacts.email + '">' + bio.contacts.mobile + '</a>';
+        var github = '<a href="https://github.com/' + bio.contacts.github + '">' + bio.contacts.github + '</a>';
+        var twitter;
+
+        if (bio.contacts.twitter.includes("@")) {
+            twitter = bio.contacts.twitter.slice(1);
+        } else {
+            twitter = bio.contacts.twitter;
+        };
+
+        twitter = '<a href="https://twitter.com/' + twitter + '">@' + twitter + '</a>';
+
+        $("#topContacts").append(HTMLmobile.replace("%data%", mobile));
+        $("#topContacts").append(HTMLemail.replace("%data%", email));
+        $("#topContacts").append(HTMLgithub.replace("%data%", github));
+        $("#topContacts").append(HTMLtwitter.replace("%data%", twitter));
+        $("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
+
+        $("span.white-text").children("a").addClass("contactLinks");
+
+        // copy contents of #topContacts to #footerContacts
+        $("#topContacts").children().clone().appendTo("#footerContacts");
+
+        if (bio.skills.length > 0) {
+            $("#header").append(HTMLskillsStart);
+            for (var i = 0; i < bio.skills.length; i++) {
+                var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
+                $("#skills").append(formattedSkill);
+            };
+        }
+    }
+};
+
+var education = {
+    "schools": [{
+            "name": "Southern New Hampshire University",
+            "location": "New Hampshire",
+            "degree": "BS",
+            "dates": "2015-2017",
+            "url": "https://snhu.edu",
+            "majors": ["Bachelors of science in IT"]
+        },
+        {
+            "name": "Art Institute Online",
+            "location": "Pittsburgh",
+            "degree": "BA",
+            "dates": "2006-2008",
+            "url": "https://aiu.edu",
+            "majors": ["Studied graphic design"]
+        }
+    ],
+    "courses": [{         //using courses instead of onlineCourses to actual education
+            "title": "AKMQC",
+            "school": "Combined Arms Center",
+            "dates": "Aug 2014",
+            "url": "cac.mil",
+        },
+        {
+            "title": "Reactive web design (estimated completion Nov 17)",
+            "school": "Udacity",
+            "dates": "Jul 2017",
+            "url": "udacity.com",
+        }
+    ],
+    displaySchools: function(){
+        for( var i = 0; i < education.schools.length; i++) {
+            var schoolName = HTMLschoolName.replace("%data%", education.schools[i].name);
+            var schoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);
+            var schoolDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
+            var schoolMajor = HTMLschoolMajor.replace("%data%", education.schools[i].degree);
+
+            var degrees = education.schools[i].majors.join();
+            var schoolDegrees = HTMLschoolDegree.replace("%data%", degrees);
+
+            $("#education").append(HTMLschoolStart);
+            $(".education-entry").last().append(schoolName + schoolDegrees + schoolDates + schoolLocation + schoolMajor);
+            $(".education-entry").last().children("a").attr("href", education.schools[i].url);
+        }
+    },
+    displayCourses: function() {
+        $("#education").append(HTMLcourseClasses);
+        for( var i = 0; i <education.courses.length; i++) {
+            var courseTitle = HTMLcourseTitle.replace("%data%",education.courses[i].title);
+            var courseSchool = HTMLcourseSchool.replace("%data%", education.courses[i].school);
+            var courseDates = HTMLcourseDates.replace("%data%", education.courses[i].dates);
+
+            $("#education").append(HTMLschoolStart);
+            $(".education-entry").last().append(courseTitle + courseSchool + courseDates);
+            $(".education-entry").last().append("<br>");
+            $(".education-entry").last().children("a").attr("href", education.courses[i].url);
+        
+
+        }
+    }
+};
+
+var projects = {
+    "projects": [{
+            "title": "portal migration",
+            "dates": "Oct 16 - Jan 17",
+            "description": "Army division level portal migration from SP10 to SP13",
+            "images": ["images/portalLogo.jpg", "images/portalSnapshot.jpg", "images/portalTemplate.jpg", "images/portalSoldier.jpg"]
+        },
+        {
+            "title": "Jolly Humor Ice Cream",
+            "dates": "June - Jul 16",
+            "description": "Static website for a fictitious ice cream company",
+            "images": ["images/JHlogo.jpg", "images/JHsnapshot.jpg"]
+        }
+    ],
+    display: function () {
+        for (var i = 0; i < projects.projects.length; i++) {
+            var projectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title);
+            var projectDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
+            var projectDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
+
+            var projectImages = projects.projects[i].images.slice();
+
+            for (j = 0; j < projectImages.length; j++) {
+                projectImages[j] = HTMLprojectImage.replace("%data%", projectImages[j]);
+            };
+
+            $("#projects").append(HTMLprojectStart);
+            $(".project-entry:last").append(projectTitle);
+            $(".project-entry:last").append(projectDates);
+            $(".project-entry:last").append(projectDescription);
+            $(".project-entry:last").append(projectImages.join(""));
+
+        }
+    }
+};
+
 var work = {
     "jobs": [{
             "employer": "JMSC",
             "title": "Operations NCO",
-            "location": "Germany",
+            "location": "Grafenwoehr, Germany",
             "dates": "2011-2015",
             "description": [
                 "Provided operational support for Joint Multinational Simulation Center.",
@@ -13,7 +167,7 @@ var work = {
         {
             "employer": "3ID",
             "title": "Content Management NCO",
-            "location": "Georgia",
+            "location": "Fort Stewart Georgia",
             "dates": "2015 - present",
             "description": [
                 "Maintains SharePoint 2013 site collections on 2 networks for division staff and subordinate units, to include permissions, site layout, and content management.",
@@ -22,7 +176,7 @@ var work = {
             ]
         }
     ],
-    displayWork: function() {
+    display: function() {
         for (job in work.jobs) {
             var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
             var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
@@ -47,112 +201,13 @@ var work = {
     }
 };
 
-var projects = {
-    "projects": [{
-            "name": "portal migration",
-            "dates": "Oct 16 - Jan 17",
-            "description": "Army division level portal migration from SP10 to SP13",
-            "images": ["images/portalLogo.jpg", "images/portalSnapshot.jpg", "images/portalTemplate.jpg", "images/portalSoldier.jpg"]
-        },
-        {
-            "name": "Jolly Humor Ice Cream",
-            "dates": "June - Jul 16",
-            "description": "Static website for a fictitious ice cream company",
-            "images": ["images/JHlogo.jpg", "images/JHsnapshot.jpg"]
-        }
-    ],
-    display: function () {
-        for (var i = 0; i < projects.projects.length; i++) {
-            var projectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].name);
-            var projectDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
-            var projectDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
-
-            var projectImages = projects.projects[i].images.slice();
-
-            for (j = 0; j < projectImages.length; j++) {
-                projectImages[j] = HTMLprojectImage.replace("%data%", projectImages[j]);
-            }
-
-            $("#projects").append(HTMLprojectStart);
-            $(".project-entry:last").append(projectTitle);
-            $(".project-entry:last").append(projectDates);
-            $(".project-entry:last").append(projectDescription);
-            $(".project-entry:last").append(projectImages.join(""));
-
-        }
-    }
-};
-
-var bio = {
-    "name": "Roy Mosby",
-    "role": "Content Manager",
-    "welcomeMessage": "Getting design out of the way of content",
-    "biography": "This is a bunch of crap about me",
-    "contacts": {
-        "mobile": "phone numer",
-        "email": "roy.e.mosby@gmail.com",
-        "github": "egomadking",
-        "twitter": "@royemosby",
-        "location": "Savannah, GA"
-    },
-    "skills": [
-        "MS Office", "HTML", "CSS", "SharePoint", "Systems design", "Business workflow development"
-    ],
-    "bioPic": "http://roymosby.me/images/Roy.jpg",
-    displayBio: function() {
-        $("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
-        $("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
-        $("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
-        $("#topContacts").append(HTMLmobile.replace("%data%", bio.contacts.mobile));
-        $("#topContacts").append(HTMLemail.replace("%data%", bio.contacts.email));
-        $("#topContacts").append(HTMLgithub.replace("%data%", bio.contacts.github));
-        $("#topContacts").append(HTMLtwitter.replace("%data%", bio.contacts.twitter));
-        $("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
-        if (bio.skills.length > 0) {
-            $("#header").append(HTMLskillsStart);
-            for (var i = 0; i < bio.skills.length; i++) {
-                var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
-                $("#skills").append(formattedSkill);
-            };
-        }
-    }
-};
-
-var education = {
-    "schools": [{
-            "name": "Southern New Hampshire University",
-            "location": "New Hampshire",
-            "dates": "2015-2017",
-            "url": "https://snhu.edu",
-            "majors": ["Bachelors of science in IT"]
-        },
-        {
-            "name": "Art Institute Online",
-            "location": "Pittsburgh",
-            "dates": "2006-2008",
-            "url": "https://aiu.edu",
-            "majors": ["Studied graphic design"]
-        }
-    ],
-    "courses": [{
-            "title": "AKMQC",
-            "school": "Combined Arms Center",
-            "dates": "Aug 2014",
-            "url": "cac.mil",
-        },
-        {
-            "title": "Reactive web design",
-            "school": "Udacity",
-            "dates": "Jul 2017",
-            "url": "udacity.com",
-        }
-    ]
-};
 
 // display resume info from objects
-bio.displayBio();
-work.displayWork();
+bio.display();
+work.display();
 projects.display();
+education.displaySchools();
+education.displayCourses();
 
 //click logger
 $(document).click(function (loc) {
@@ -184,5 +239,6 @@ function inName() {
     }
 }
 
-//supposed to insert a Google Map
+//insert a Google Map
 $("#mapDiv").append(googleMap);
+
