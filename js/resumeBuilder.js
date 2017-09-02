@@ -10,17 +10,20 @@ var bio = {
         "location": "Richmond Hill, GA"
     },
     "skills": [
-        "SharePoint", "Systems design", "Business workflow development", "MS Office", "HTML", "CSS", "JavaScript" 
+        "SharePoint", "Systems design", "Workflow development", "MS Office", "HTML", "CSS", "JavaScript"
     ],
     "bioPic": "http://roymosby.me/images/Roy.jpg",
-    display: function() {
+    display: function () {
         $("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
         $("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
         $("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
 
+        //accessibility- adding alt for biopic
+        $(".biopic").attr("alt", bio.name + ", " + bio.role);
+
         //link all media
         var mobile = '<a href="tel:' + bio.contacts.mobile + '">' + bio.contacts.mobile + '</a>';
-        var email = '<a href="mailto:' + bio.contacts.email + '">' + bio.contacts.mobile + '</a>';
+        var email = '<a href="mailto:' + bio.contacts.email + '">' + bio.contacts.email + '</a>';
         var github = '<a href="https://github.com/' + bio.contacts.github + '">' + bio.contacts.github + '</a>';
         var twitter;
 
@@ -30,7 +33,13 @@ var bio = {
             twitter = bio.contacts.twitter;
         };
 
+        //setting global twitterName for use in Twitter feed
+        twitterName = twitter;
         twitter = '<a href="https://twitter.com/' + twitter + '">@' + twitter + '</a>';
+
+
+
+
 
         $("#topContacts").append(HTMLmobile.replace("%data%", mobile));
         $("#topContacts").append(HTMLemail.replace("%data%", email));
@@ -71,21 +80,21 @@ var education = {
             "majors": ["Studied graphic design"]
         }
     ],
-    "courses": [{         //using courses instead of onlineCourses to actual education
+    "courses": [{ //using courses instead of onlineCourses to actual education
             "title": "AKMQC",
             "school": "Combined Arms Center",
             "dates": "Aug 2014",
-            "url": "cac.mil",
+            "url": "http://usacac.army.mil/",
         },
         {
             "title": "Reactive web design (estimated completion Nov 17)",
             "school": "Udacity",
             "dates": "Jul 2017",
-            "url": "udacity.com",
+            "url": "https://www.udacity.com/",
         }
     ],
-    displaySchools: function(){
-        for( var i = 0; i < education.schools.length; i++) {
+    displaySchools: function () {
+        for (var i = 0; i < education.schools.length; i++) {
             var schoolName = HTMLschoolName.replace("%data%", education.schools[i].name);
             var schoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);
             var schoolDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
@@ -99,10 +108,10 @@ var education = {
             $(".education-entry").last().children("a").attr("href", education.schools[i].url);
         }
     },
-    displayCourses: function() {
+    displayCourses: function () {
         $("#education").append(HTMLcourseClasses);
-        for( var i = 0; i <education.courses.length; i++) {
-            var courseTitle = HTMLcourseTitle.replace("%data%",education.courses[i].title);
+        for (var i = 0; i < education.courses.length; i++) {
+            var courseTitle = HTMLcourseTitle.replace("%data%", education.courses[i].title);
             var courseSchool = HTMLcourseSchool.replace("%data%", education.courses[i].school);
             var courseDates = HTMLcourseDates.replace("%data%", education.courses[i].dates);
 
@@ -110,7 +119,7 @@ var education = {
             $(".education-entry").last().append(courseTitle + courseSchool + courseDates);
             $(".education-entry").last().append("<br>");
             $(".education-entry").last().children("a").attr("href", education.courses[i].url);
-        
+
 
         }
     }
@@ -121,25 +130,33 @@ var projects = {
             "title": "portal migration",
             "dates": "Oct 16 - Jan 17",
             "description": "Army division level portal migration from SP10 to SP13",
-            "images": ["images/portalLogo.jpg", "images/portalSnapshot.jpg", "images/portalTemplate.jpg", "images/portalSoldier.jpg"]
+            "images": ["images/portalLogo.jpg", "images/portalSnapshot.jpg"],
+            "link": "http://roymosby.me/projects/PortalProposal.html"
         },
         {
             "title": "Jolly Humor Ice Cream",
             "dates": "June - Jul 16",
             "description": "Static website for a fictitious ice cream company",
-            "images": ["images/JHlogo.jpg", "images/JHsnapshot.jpg"]
+            "images": ["images/JHlogo.jpg", "images/JHsnapshot.jpg"],
+            "link": "http://rmosby0994050.altervista.org/"
         }
     ],
     display: function () {
         for (var i = 0; i < projects.projects.length; i++) {
             var projectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title);
+            projectTitle = projectTitle.replace("#", projects.projects[i].link);
             var projectDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
             var projectDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
 
             var projectImages = projects.projects[i].images.slice();
 
             for (j = 0; j < projectImages.length; j++) {
+                var description = projects.projects[i].title + " picture " + (j + 1).toString();
+                var alt = ' alt="' + description + '"';
                 projectImages[j] = HTMLprojectImage.replace("%data%", projectImages[j]);
+
+                //accessibility- adding in alt for each project pic
+                projectImages[j] = projectImages[j].substr(0, 4) + alt + projectImages[j].substr(4, (projectImages[j].length - 4));
             };
 
             $("#projects").append(HTMLprojectStart);
@@ -154,10 +171,20 @@ var projects = {
 
 var work = {
     "jobs": [{
+            "employer": "USANATO",
+            "title": "PABX Technician",
+            "location": "Naples, Italy",
+            "dates": "2009-2012",
+            "description": [
+                "Private automated branch exchange technician who oversaw installation and maintenance of Promina 400 and PABX systems, enabling deployed NATO command teams to utilize both voice and data communication systems."
+            ]
+        },
+
+        {
             "employer": "JMSC",
             "title": "Operations NCO",
             "location": "Grafenwoehr, Germany",
-            "dates": "2011-2015",
+            "dates": "2012-2015",
             "description": [
                 "Provided operational support for Joint Multinational Simulation Center.",
                 "Unit representative for knowledge management efforts.",
@@ -170,23 +197,21 @@ var work = {
             "location": "Fort Stewart Georgia",
             "dates": "2015 - present",
             "description": [
-                "Maintains SharePoint 2013 site collections on 2 networks for division staff and subordinate units, to include permissions, site layout, and content management.",
-                "did that",
-                "did some more"
+                "Maintains SharePoint 2013 site collections on 2 networks for division staff and subordinate units, to include permissions, site layout, and content management."
             ]
         }
     ],
-    display: function() {
+    display: function () {
         for (job in work.jobs) {
             var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
             var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
             var employerTitle = formattedWorkEmployer + formattedWorkTitle;
             var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
-    
+
             $("#workExperience").append(HTMLworkStart);
             $(".work-entry:last").append(employerTitle);
             $(".work-entry:last").append(formattedWorkDates);
-    
+
             var descr = "";
             for (var i = 0; i < work.jobs[job].description.length; i++) {
                 if (i === 0) {
@@ -216,29 +241,40 @@ $(document).click(function (loc) {
     logClicks(x, y);
 });
 
-//internationalize button
+//internationalize button- toggles last name between ALL-CAPS and Title-Case
 var internationalize = false;
 $("#main").append(internationalizeButton);
+
 function inName() {
     if (internationalize === false) {
-        //capitalize last;
+        //ALL-CAPS last;
         var splitName = bio.name.split(" ");
         splitName[1] = splitName[1].toUpperCase();
         bio.name = splitName.join(" ");
         $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
+        $("button").text("Americanize");
         internationalize = true;
         //return bio.name;
     } else {
-        //title case last;
+        //Title-Case last;
         var splitName = bio.name.split(" ");
         splitName[1] = splitName[1].slice(0, 1).toUpperCase() + splitName[1].slice(1).toLowerCase();
         bio.name = splitName.join(" ");
         $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
+        $("button").text("Internationalize");
         internationalize = false;
         //return bio.name;
     }
 }
 
-//insert a Google Map
+//inserts Google Map
 $("#mapDiv").append(googleMap);
 
+//inserts Twitter feed
+var twitterName;  //Global so bio.display() has access to this variable
+
+function twitterFeed() {  //wrapper function to prevent hoisting issues
+    var twitterUrl = '<a class="twitter-timeline" href="https://twitter.com/' + twitterName + '">Tweets by' + twitterName + '</a>';
+    $(".map-twitter-wrapper").append('<div class="twitterDiv">' + twitterUrl + '</div>');
+}
+twitterFeed();

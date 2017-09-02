@@ -178,9 +178,13 @@ function initializeMap() {
     });
 
     // hmmmm, I wonder what this is about...
-    google.maps.event.addListener(marker, 'click', function() {
-      // your code goes here!
+    google.maps.event.addListener(marker, 'mouseover', function() {
+      infoWindow.open(map, marker);
     });
+    google.maps.event.addListener(marker, 'mouseout', function() {
+      infoWindow.close(map, marker);
+    });
+    
 
     // this is where the pin actually gets added to the map.
     // bounds.extend() takes in a map location object
