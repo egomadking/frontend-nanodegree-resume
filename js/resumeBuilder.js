@@ -137,7 +137,7 @@ var projects = {
             "title": "Jolly Humor Ice Cream",
             "dates": "June - Jul 16",
             "description": "Static website for a fictitious ice cream company",
-            "images": ["images/JHlogo.jpg", "images/JHsnapshot.jpg"],
+            "images": ["images/JHLogo.jpg", "images/JHsnapshot.jpg"],
             "link": "http://rmosby0994050.altervista.org/"
         }
     ],
