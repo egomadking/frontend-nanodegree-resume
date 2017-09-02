@@ -147,7 +147,6 @@ function initializeMap() {
     });
 
     return locations;
-    console.log(locations);
   }
 
   /*

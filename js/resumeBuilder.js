@@ -31,7 +31,7 @@ var bio = {
             twitter = bio.contacts.twitter.slice(1);
         } else {
             twitter = bio.contacts.twitter;
-        };
+        }
 
         //setting global twitterName for use in Twitter feed
         twitterName = twitter;
@@ -57,7 +57,7 @@ var bio = {
             for (var i = 0; i < bio.skills.length; i++) {
                 var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
                 $("#skills").append(formattedSkill);
-            };
+            }
         }
     }
 };
@@ -157,7 +157,7 @@ var projects = {
 
                 //accessibility- adding in alt for each project pic
                 projectImages[j] = projectImages[j].substr(0, 4) + alt + projectImages[j].substr(4, (projectImages[j].length - 4));
-            };
+            }
 
             $("#projects").append(HTMLprojectStart);
             $(".project-entry:last").append(projectTitle);
@@ -202,7 +202,7 @@ var work = {
         }
     ],
     display: function () {
-        for (job in work.jobs) {
+        for (var job in work.jobs) {
             var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
             var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
             var employerTitle = formattedWorkEmployer + formattedWorkTitle;
@@ -217,9 +217,9 @@ var work = {
                 if (i === 0) {
                     descr = work.jobs[job].description[i];
                 } else {
-                    descr = descr + " " + work.jobs[job].description[i]
-                };
-            };
+                    descr = descr + " " + work.jobs[job].description[i];
+                }
+            }
             var formattedWorkDescription = HTMLworkDescription.replace("%data%", descr);
             $(".work-entry:last").append(formattedWorkDescription);
         }
@@ -246,9 +246,10 @@ var internationalize = false;
 $("#main").append(internationalizeButton);
 
 function inName() {
+    var splitName;
     if (internationalize === false) {
         //ALL-CAPS last;
-        var splitName = bio.name.split(" ");
+        splitName = bio.name.split(" ");
         splitName[1] = splitName[1].toUpperCase();
         bio.name = splitName.join(" ");
         $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
@@ -257,7 +258,7 @@ function inName() {
         //return bio.name;
     } else {
         //Title-Case last;
-        var splitName = bio.name.split(" ");
+        splitName = bio.name.split(" ");
         splitName[1] = splitName[1].slice(0, 1).toUpperCase() + splitName[1].slice(1).toLowerCase();
         bio.name = splitName.join(" ");
         $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
@@ -271,9 +272,9 @@ function inName() {
 $("#mapDiv").append(googleMap);
 
 //inserts Twitter feed
-var twitterName;  //Global so bio.display() has access to this variable
+var twitterName; //Global so bio.display() has access to this variable
 
-function twitterFeed() {  //wrapper function to prevent hoisting issues
+function twitterFeed() { //wrapper function to prevent hoisting issues
     var twitterUrl = '<a class="twitter-timeline" href="https://twitter.com/' + twitterName + '">Tweets by' + twitterName + '</a>';
     $(".map-twitter-wrapper").append('<div class="twitterDiv">' + twitterUrl + '</div>');
 }
