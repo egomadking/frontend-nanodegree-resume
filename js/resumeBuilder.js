@@ -127,8 +127,8 @@ var education = {
         wrapper function used to satisfy the requirement
         that there is one 'display' function for education
         */
-        displaySchools();
-        displayCourses();
+        education.displaySchools();
+        education.displayCourses();
     }
 };
 
@@ -247,7 +247,6 @@ function inName() {
         $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
         $("button").text("Americanize");
         internationalize = true;
-        //return bio.name;
     } else {
         //Title-Case last;
         splitName = bio.name.split(" ");
@@ -256,7 +255,6 @@ function inName() {
         $("#name").replaceWith("<h1 id=\"name\">" + bio.name + "</h1>");
         $("button").text("Internationalize");
         internationalize = false;
-        //return bio.name;
     }
 }
 
