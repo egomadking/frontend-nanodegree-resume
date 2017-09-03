@@ -1,3 +1,5 @@
+var data = "%data%";
+
 var bio = {
     "name": "Roy Mosby",
     "role": "Content Manager",
@@ -12,11 +14,12 @@ var bio = {
     "skills": [
         "SharePoint", "Systems design", "Workflow development", "MS Office", "HTML", "CSS", "JavaScript"
     ],
-    "bioPic": "http://roymosby.me/images/Roy.jpg",
+    "biopic": "http://roymosby.me/images/Roy.jpg",
     display: function () {
-        $("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
-        $("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
-        $("#header").append(HTMLbioPic.replace("%data%", bio.bioPic));
+        $("#header").prepend(HTMLwelcomeMsg.replace(data, bio.welcomeMessage));
+        $("#header").prepend(HTMLheaderRole.replace(data, bio.role));
+        $("#header").prepend(HTMLheaderName.replace(data, bio.name));
+        $("#header").append(HTMLbioPic.replace(data, bio.biopic));
 
         //accessibility- adding alt for biopic
         $(".biopic").attr("alt", bio.name + ", " + bio.role);
@@ -37,15 +40,11 @@ var bio = {
         twitterName = twitter;
         twitter = '<a href="https://twitter.com/' + twitter + '">@' + twitter + '</a>';
 
-
-
-
-
-        $("#topContacts").append(HTMLmobile.replace("%data%", mobile));
-        $("#topContacts").append(HTMLemail.replace("%data%", email));
-        $("#topContacts").append(HTMLgithub.replace("%data%", github));
-        $("#topContacts").append(HTMLtwitter.replace("%data%", twitter));
-        $("#topContacts").append(HTMLlocation.replace("%data%", bio.contacts.location));
+        $("#topContacts").append(HTMLmobile.replace(data, mobile));
+        $("#topContacts").append(HTMLemail.replace(data, email));
+        $("#topContacts").append(HTMLgithub.replace(data, github));
+        $("#topContacts").append(HTMLtwitter.replace(data, twitter));
+        $("#topContacts").append(HTMLlocation.replace(data, bio.contacts.location));
 
         $("span.white-text").children("a").addClass("contactLinks");
 
@@ -55,7 +54,7 @@ var bio = {
         if (bio.skills.length > 0) {
             $("#header").append(HTMLskillsStart);
             for (var i = 0; i < bio.skills.length; i++) {
-                var formattedSkill = HTMLskills.replace("%data%", bio.skills[i]);
+                var formattedSkill = HTMLskills.replace(data, bio.skills[i]);
                 $("#skills").append(formattedSkill);
             }
         }
@@ -80,7 +79,7 @@ var education = {
             "majors": ["Studied graphic design"]
         }
     ],
-    "courses": [{ //using courses instead of onlineCourses to actual education
+    "onlineCourses": [{ //using courses instead of onlineCourses to actual education
             "title": "AKMQC",
             "school": "Combined Arms Center",
             "dates": "Aug 2014",
@@ -95,13 +94,13 @@ var education = {
     ],
     displaySchools: function () {
         for (var i = 0; i < education.schools.length; i++) {
-            var schoolName = HTMLschoolName.replace("%data%", education.schools[i].name);
-            var schoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);
-            var schoolDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
-            var schoolMajor = HTMLschoolMajor.replace("%data%", education.schools[i].degree);
+            var schoolName = HTMLschoolName.replace(data, education.schools[i].name);
+            var schoolLocation = HTMLschoolLocation.replace(data, education.schools[i].location);
+            var schoolDates = HTMLschoolDates.replace(data, education.schools[i].dates);
+            var schoolMajor = HTMLschoolMajor.replace(data, education.schools[i].degree);
 
             var degrees = education.schools[i].majors.join();
-            var schoolDegrees = HTMLschoolDegree.replace("%data%", degrees);
+            var schoolDegrees = HTMLschoolDegree.replace(data, degrees);
 
             $("#education").append(HTMLschoolStart);
             $(".education-entry").last().append(schoolName + schoolDegrees + schoolDates + schoolLocation + schoolMajor);
@@ -110,18 +109,26 @@ var education = {
     },
     displayCourses: function () {
         $("#education").append(HTMLcourseClasses);
-        for (var i = 0; i < education.courses.length; i++) {
-            var courseTitle = HTMLcourseTitle.replace("%data%", education.courses[i].title);
-            var courseSchool = HTMLcourseSchool.replace("%data%", education.courses[i].school);
-            var courseDates = HTMLcourseDates.replace("%data%", education.courses[i].dates);
+        for (var i = 0; i < education.onlineCourses.length; i++) {
+            var courseTitle = HTMLcourseTitle.replace(data, education.onlineCourses[i].title);
+            var courseSchool = HTMLcourseSchool.replace(data, education.onlineCourses[i].school);
+            var courseDates = HTMLcourseDates.replace(data, education.onlineCourses[i].dates);
 
             $("#education").append(HTMLschoolStart);
             $(".education-entry").last().append(courseTitle + courseSchool + courseDates);
             $(".education-entry").last().append("<br>");
-            $(".education-entry").last().children("a").attr("href", education.courses[i].url);
+            $(".education-entry").last().children("a").attr("href", education.onlineCourses[i].url);
 
 
         }
+    },
+    display: function () {
+        /*
+        wrapper function used to satisfy the requirement
+        that there is one 'display' function for education
+        */
+        displaySchools();
+        displayCourses();
     }
 };
 
@@ -143,17 +150,17 @@ var projects = {
     ],
     display: function () {
         for (var i = 0; i < projects.projects.length; i++) {
-            var projectTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title);
+            var projectTitle = HTMLprojectTitle.replace(data, projects.projects[i].title);
             projectTitle = projectTitle.replace("#", projects.projects[i].link);
-            var projectDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
-            var projectDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
+            var projectDates = HTMLprojectDates.replace(data, projects.projects[i].dates);
+            var projectDescription = HTMLprojectDescription.replace(data, projects.projects[i].description);
 
             var projectImages = projects.projects[i].images.slice();
 
             for (j = 0; j < projectImages.length; j++) {
                 var description = projects.projects[i].title + " picture " + (j + 1).toString();
                 var alt = ' alt="' + description + '"';
-                projectImages[j] = HTMLprojectImage.replace("%data%", projectImages[j]);
+                projectImages[j] = HTMLprojectImage.replace(data, projectImages[j]);
 
                 //accessibility- adding in alt for each project pic
                 projectImages[j] = projectImages[j].substr(0, 4) + alt + projectImages[j].substr(4, (projectImages[j].length - 4));
@@ -175,9 +182,7 @@ var work = {
             "title": "PABX Technician",
             "location": "Naples, Italy",
             "dates": "2009-2012",
-            "description": [
-                "Private automated branch exchange technician who oversaw installation and maintenance of Promina 400 and PABX systems, enabling deployed NATO command teams to utilize both voice and data communication systems."
-            ]
+            "description": "Private automated branch exchange technician who oversaw installation and maintenance of Promina 400 and PABX systems, enabling deployed NATO command teams to utilize both voice and data communication systems."
         },
 
         {
@@ -185,42 +190,29 @@ var work = {
             "title": "Operations NCO",
             "location": "Grafenwoehr, Germany",
             "dates": "2012-2015",
-            "description": [
-                "Provided operational support for Joint Multinational Simulation Center.",
-                "Unit representative for knowledge management efforts.",
-                "Responsible for coordinating resources for training units and delegating tasks assigned by higher unit."
-            ]
+            "description": "Provided operational support for Joint Multinational Simulation Center. Unit representative for knowledge management efforts. Responsible for coordinating resources for training units and delegating tasks assigned by higher unit."
         },
         {
             "employer": "3ID",
             "title": "Content Management NCO",
             "location": "Fort Stewart Georgia",
             "dates": "2015 - present",
-            "description": [
-                "Maintains SharePoint 2013 site collections on 2 networks for division staff and subordinate units, to include permissions, site layout, and content management."
-            ]
+            "description": "Maintains SharePoint 2013 site collections on 2 networks for division staff and subordinate units, to include permissions, site layout, and content management."
         }
     ],
     display: function () {
-        for (var job in work.jobs) {
-            var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
-            var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+        for (var job = 0; job < work.jobs.length; job++) {
+            var formattedWorkEmployer = HTMLworkEmployer.replace(data, work.jobs[job].employer);
+            var formattedWorkTitle = HTMLworkTitle.replace(data, work.jobs[job].title);
             var employerTitle = formattedWorkEmployer + formattedWorkTitle;
-            var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
+            var formattedWorkDates = HTMLworkDates.replace(data, work.jobs[job].dates);
+            var formattedWorkLocation = HTMLworkLocation.replace(data, work.jobs[job].location);
+            var formattedWorkDescription = HTMLworkDescription.replace(data, work.jobs[job].description);
 
             $("#workExperience").append(HTMLworkStart);
             $(".work-entry:last").append(employerTitle);
             $(".work-entry:last").append(formattedWorkDates);
-
-            var descr = "";
-            for (var i = 0; i < work.jobs[job].description.length; i++) {
-                if (i === 0) {
-                    descr = work.jobs[job].description[i];
-                } else {
-                    descr = descr + " " + work.jobs[job].description[i];
-                }
-            }
-            var formattedWorkDescription = HTMLworkDescription.replace("%data%", descr);
+            $(".work-entry:last").append(formattedWorkLocation);
             $(".work-entry:last").append(formattedWorkDescription);
         }
     }
@@ -231,8 +223,8 @@ var work = {
 bio.display();
 work.display();
 projects.display();
-education.displaySchools();
-education.displayCourses();
+education.display();
+
 
 //click logger
 $(document).click(function (loc) {

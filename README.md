@@ -45,11 +45,11 @@ The resume has four distinct sections: work, education, projects and a header wi
             role : string
             contacts : an object with
                   mobile: string
-                  email: string 
+                  email: string
                   github: string
                   twitter: string (optional)
                   location: string
-            welcomeMessage: string 
+            welcomeMessage: string
             skills: array of strings
             biopic: string url
             display: function taking no parameters
@@ -73,17 +73,17 @@ The resume has four distinct sections: work, education, projects and a header wi
   * `work` contains
           
             jobs: array of objects with
-                 employer: string 
-                 title: string 
-                 location: string 
+                 employer: string
+                 title: string
+                 location: string
                  dates: string (Can be 'in progress')
-                 description: string 
+                 description: string
             display: function taking no parameters
 
   * `projects` contains:
 
             projects: array of objects with
-                  title: string 
+                  title: string
                   dates: string (works with a hyphen between them)
                   description: string
                   images: array with string urls
